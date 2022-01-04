@@ -6,22 +6,15 @@ import Hero from "../../components/Hero";
 import MainContainer from "../../components/Layout/MainContainer";
 import Seo from "../../components/Seo";
 import { blogsApi } from "../../lib/api";
+import useBlogs from "../../lib/hooks/useBlogs";
 import { mediaBlockRenderer, myBlockStyleFn } from "../../lib/media";
 
 function Home({ blog, ...props }) {
-  const [newBlog, setNewBlog] = useState("");
-  const { getBlogs } = useContext(GlobalContext);
-
-  const data = JSON.parse(blog.editorState);
+  const { newBlog } = useBlogs();
+  const data = JSON.parse(blog.editorState??newBlog.editorState);
   const contentState = convertFromRaw(data);
   const editorState = EditorState.createWithContent(contentState);
 
-  useEffect(() => {
-    blogsApi().then((res) => {
-      getBlogs(res.data);
-      setNewBlog(res.data[0]);
-    });
-  }, []);
   return (
     <>
       <Seo blog={blog ?? newBlog} />

@@ -6,7 +6,6 @@ import MomentMini from 'moment-mini'
 function Author({ blog, ...props }) {
   const { authors } = blog;
   const [windowWidth, setWindowWidth] = useState("");
-  console.log("authors", authors)
 
   useEffect(() => {
     window.addEventListener("resize", handleResizeWindow);

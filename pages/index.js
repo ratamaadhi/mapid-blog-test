@@ -1,42 +1,23 @@
-import {
-  convertFromRaw,
-  Editor,
-  EditorState,
-} from "draft-js";
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../appContext";
+import { convertFromRaw, Editor, EditorState } from "draft-js";
+import { useState } from "react";
 import Author from "../components/Authors";
 import Hero from "../components/Hero";
 import MainContainer from "../components/Layout/MainContainer";
 import Seo from "../components/Seo";
 import { blogsApi } from "../lib/api";
+import useBlogs from "../lib/hooks/useBlogs";
 import { mediaBlockRenderer, myBlockStyleFn } from "../lib/media";
 
 function Home({ blog, ...props }) {
-  const [newBlog, setNewBlog] = useState("");
-  const { getBlogs } = useContext(GlobalContext);
+  const { newBlog } = useBlogs();
 
-  const data = JSON.parse(blog.editorState);
+  const data = JSON.parse(blog.editorState??newBlog.editorState);
   const contentState = convertFromRaw(data);
-  // const editorState = EditorState.createWithContent(contentState);
-  const Image = (props) => {
-    if (!props.src) {
-      return <img src={props.src} />;
-    }
-    return null;
-  };
 
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(contentState)
   );
-  console.log("data", data);
 
-  useEffect(() => {
-    blogsApi().then((res) => {
-      getBlogs(res.data);
-      setNewBlog(res.data[0]);
-    });
-  }, []);
   return (
     <>
       <Seo blog={blog ?? newBlog} />

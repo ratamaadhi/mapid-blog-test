@@ -8,23 +8,17 @@ import MainContainer from "../../components/Layout/MainContainer";
 import { convertFromRaw, Editor, EditorState } from "draft-js";
 import Author from "../../components/Authors";
 import { mediaBlockRenderer, myBlockStyleFn } from "../../lib/media";
+import useBlogs from "../../lib/hooks/useBlogs";
 
 function Slug({ blog, ...props }) {
   const router = useRouter();
   const { slug } = router.query;
-  const [newBlog, setNewBlog] = useState("");
-  const { getBlogs } = useContext(GlobalContext);
+  const { newBlog } = useBlogs(slug);
 
-  const data = JSON.parse(blog.editorState);
+  const data = JSON.parse(blog.editorState??newBlog.editorState);
   const contentState = convertFromRaw(data);
   const editorState = EditorState.createWithContent(contentState);
 
-  useEffect(() => {
-    blogsApi().then((res) => {
-      getBlogs(res.data);
-      setNewBlog(res.data.filter(fil => fil.link === slug)[0]);
-    });
-  }, []);
   return (
     <>
       <Seo blog={blog ?? newBlog} />
