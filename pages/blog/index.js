@@ -1,16 +1,12 @@
-import {
-  convertFromRaw,
-  Editor,
-  EditorState,
-} from "draft-js";
+import { convertFromRaw, Editor, EditorState } from "draft-js";
 import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../appContext";
-import Author from "../components/Authors";
-import Hero from "../components/Hero";
-import MainContainer from "../components/Layout/MainContainer";
-import Seo from "../components/Seo";
-import { blogsApi } from "../lib/api";
-import { mediaBlockRenderer, myBlockStyleFn } from "../lib/media";
+import { GlobalContext } from "../../appContext";
+import Author from "../../components/Authors";
+import Hero from "../../components/Hero";
+import MainContainer from "../../components/Layout/MainContainer";
+import Seo from "../../components/Seo";
+import { blogsApi } from "../../lib/api";
+import { mediaBlockRenderer, myBlockStyleFn } from "../../lib/media";
 
 function Home({ blog, ...props }) {
   const [newBlog, setNewBlog] = useState("");
@@ -18,18 +14,7 @@ function Home({ blog, ...props }) {
 
   const data = JSON.parse(blog.editorState);
   const contentState = convertFromRaw(data);
-  // const editorState = EditorState.createWithContent(contentState);
-  const Image = (props) => {
-    if (!props.src) {
-      return <img src={props.src} />;
-    }
-    return null;
-  };
-
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(contentState)
-  );
-  console.log("data", data);
+  const editorState = EditorState.createWithContent(contentState);
 
   useEffect(() => {
     blogsApi().then((res) => {
