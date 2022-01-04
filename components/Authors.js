@@ -6,6 +6,7 @@ import MomentMini from 'moment-mini'
 function Author({ blog, ...props }) {
   const { authors } = blog;
   const [windowWidth, setWindowWidth] = useState("");
+  console.log("authors", authors)
 
   useEffect(() => {
     window.addEventListener("resize", handleResizeWindow);
@@ -19,7 +20,7 @@ function Author({ blog, ...props }) {
       <div className="relative w-20 h-20 rounded-full overflow-hidden shadow-xl border-2 border-gray-500/80">
         <Image
           loader={myLoader}
-          src={authors[0].user?.profile_picture.url_compressed??'https://doc.mapid.io/static/media/profile_pic_comment.2a6f2a32.svg'}
+          src={authors[0].user?.profile_picture.url_compressed??authors[0].user?.profile_picture.url??'https://doc.mapid.io/static/media/profile_pic_comment.2a6f2a32.svg'}
           alt={authors[0].user?.profile_picture.name??'null'}
           layout="fill"
           placeholder="blur"
