@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { myLoader, shimmer, toBase64 } from "../../lib/media";
+import useInnerWidth from "../../lib/hooks/useInnerWidth";
 
 function Hero({ blog, ...props }) {
-  const [windowWidth, setWindowWidth] = useState("");
+  const { windowWidth } = useInnerWidth()
 
   const data = JSON.parse(blog.editorState);
   const coverBlog = Object.keys(data.entityMap)
     .map((a) => data.entityMap[a] ?? [])
     .filter((fil) => fil.type === "image")[0]?.data;
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResizeWindow);
-  }, [windowWidth]);
-
-  function handleResizeWindow(e) {
-    setWindowWidth(window.innerWidth);
-  }
 
   return (
     <div className="relative w-full min-h-[500px]">

@@ -3,14 +3,21 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../appContext";
 import Author from "../../components/Authors";
 import Hero from "../../components/Hero";
+import ListBlogs from "../../components/Layout/ListBlogs";
 import MainContainer from "../../components/Layout/MainContainer";
+import ToggleList from "../../components/Layout/ToggleList";
 import Seo from "../../components/Seo";
 import { blogsApi } from "../../lib/api";
 import useBlogs from "../../lib/hooks/useBlogs";
+import useScroll from "../../lib/hooks/useScroll";
+import useToggleList from "../../lib/hooks/useToggleList";
 import { mediaBlockRenderer, myBlockStyleFn } from "../../lib/media";
 
 function Home({ blog, ...props }) {
   const { newBlog } = useBlogs();
+  const { open, setOpen } = useToggleList()
+  const { scrollY } = useScroll();
+
   const data = JSON.parse(blog.editorState??newBlog.editorState);
   const contentState = convertFromRaw(data);
   const editorState = EditorState.createWithContent(contentState);
@@ -19,6 +26,8 @@ function Home({ blog, ...props }) {
     <>
       <Seo blog={blog ?? newBlog} />
       <Hero blog={blog ?? newBlog} />
+      <ListBlogs open={open} scrollY={scrollY} />
+      <ToggleList open={open} setOpen={setOpen} scrollY={scrollY} />
       <MainContainer>
         <Author blog={blog ?? newBlog} />
         <div className="p-[15px] mx-[-15px] text-lg text-gray-700">

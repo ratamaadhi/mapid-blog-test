@@ -9,11 +9,17 @@ import { convertFromRaw, Editor, EditorState } from "draft-js";
 import Author from "../../components/Authors";
 import { mediaBlockRenderer, myBlockStyleFn } from "../../lib/media";
 import useBlogs from "../../lib/hooks/useBlogs";
+import useToggleList from "../../lib/hooks/useToggleList";
+import ListBlogs from "../../components/Layout/ListBlogs";
+import ToggleList from "../../components/Layout/ToggleList";
+import useScroll from "../../lib/hooks/useScroll";
 
 function Slug({ blog, ...props }) {
   const router = useRouter();
   const { slug } = router.query;
   const { newBlog } = useBlogs(slug);
+  const { open, setOpen } = useToggleList()
+  const { scrollY } = useScroll();
 
   const data = JSON.parse(blog.editorState??newBlog.editorState);
   const contentState = convertFromRaw(data);
@@ -23,6 +29,8 @@ function Slug({ blog, ...props }) {
     <>
       <Seo blog={blog ?? newBlog} />
       <Hero blog={blog ?? newBlog} />
+      <ListBlogs open={open} scrollY={scrollY} />
+      <ToggleList open={open} setOpen={setOpen} scrollY={scrollY} />
       <MainContainer>
         <Author blog={blog ?? newBlog} />
         <div className="p-[15px] mx-[-15px] text-lg text-gray-700">
