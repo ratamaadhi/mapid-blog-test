@@ -17,7 +17,7 @@ const ListBlogs = ({ open, scrollY }) => {
         open ? "left-[2%]" : "left-[-300px]"
       } ${
         scrollY ? "top-[100px]" : "top-[450px]"
-      } h-[80vh] w-[300px] max-w-[80vw] rounded-2xl bg-[#e4e4e4] text-white z-20 transition-all delay-100 duration-500 ease-in-out shadow-lg pt-10 pb-[10px] px-[18px] overflow-y-scroll border border-gray-400/20`}
+      } h-[80vh] w-[300px] max-w-[80vw] rounded-2xl bg-[#e4e4e4] text-white z-20 transition-all delay-100 duration-500 ease-in-out shadow-lg pt-10 px-[18px] overflow-y-scroll border border-gray-400/20 pb-96`}
     >
       <div className="py-2 px-6 rounded-3xl text-center text-gray-800 bg-white text-sm">
         BLOG

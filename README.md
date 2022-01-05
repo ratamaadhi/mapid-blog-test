@@ -9,7 +9,7 @@ Tags: front-end, github, nextjs, reactjs, tailwind, web
 
 # Getting Started
 
-**Expected** `node` version "`^12.22.0` || `^14.17.0` || >=`16.0.0`”
+**Expected** `node` version "`^12.22.0` || `^14.17.0`”
 
 - Clone repo from Github
     
